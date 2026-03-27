@@ -27,18 +27,33 @@
     "prod:test": "grunt serve-test",
     "format": "grunt eslint --fix",
     "preversion": "grunt test build",
-    "postversion": "git push && git push --tags && npm publish",
     "release": "grunt && node ./bin/copy-to-piskel-website",
     "release-piskel-web": "grunt && node ./bin/copy-to-piskel-web",
     "build:desktop": "grunt desktop",
     "build:mac": "grunt desktop-mac",
     "start:nw": "grunt build && nw",
+    
     "e2e": "npx playwright test",
     "e2e:interactive": "npx playwright test --ui",
     "unit-tests": "karma start",
     "unit-tests:watch": "karma start --auto-watch --no-single-run",
-    "test": "npm run unit-tests; npm run e2e",
-    "test-ci": "bash ./run-test-ci.sh"
+    "test": "npm run unit-tests; npm run e2e",    
+    "test-ci": "bash ./run-test-ci.sh",
+    "postversion": "git push && git push --tags && npm publish",
+
+    "vite:sprite": "node scripts/sprite.js",
+    "vite:build": "npm run vite:sprite && vite build && node scripts/partials.js",
+    "vite:start": "npm run vite:build && node scripts/serve.js",
+    "vite:test-server": "npm run vite:build && node scripts/serve.js --test",
+    "vite:release": "npm run vite:build && node ./bin/copy-to-piskel-website",
+    "vite:release-piskel-web": "npm run vite:build && node ./bin/copy-to-piskel-web",
+    "vite:lint": "eslint src/js --ignore-pattern '**/lib/**'",
+    "vite:lint:fix": "eslint src/js --ignore-pattern '**/lib/**' --fix",
+    "vite:desktop": "npm run vite:lint && npm run vite:build && node scripts/desktop.js",
+    "vite:desktop:mac": "npm run vite:lint && npm run vite:build && node scripts/desktop.js --platform=macos",
+    "vite:desktop:mac-old": "npm run vite:lint && npm run vite:build && node scripts/desktop.js --platform=macos-old",
+    "vite:start:nw": "npm run vite:build && nw",
+    "vite:preversion": "npm run vite:lint && npm test && npm run vite:build"
   },
   "devDependencies": {
     "@playwright/test": "^1.52.0",
@@ -69,10 +84,15 @@
     "karma-chrome-launcher": "^3.2.0",
     "karma-jasmine": "4.0.1",
     "load-grunt-tasks": "5.1.0",
+    "magic-string": "^0.30.21",
     "png-ts": "^0.0.3",
     "puppeteer": "^24.10.0",
     "rmdir": "1.2.0",
-    "typescript": "^5.8.3"
+    "spritesheet-templates": "^10.5.2",
+    "spritesmith": "^3.5.1",
+    "terser": "^5.46.1",
+    "typescript": "^5.8.3",
+    "vite": "^8.0.3"
   },
   "window": {
     "title": "Piskel",
