@@ -5,6 +5,7 @@ const baseUrl = 'http://localhost:9001';
 export default defineConfig({
   testDir: 'tests/e2e/playwright',
   outputDir: 'tests/e2e/playwright/tmp',
+  snapshotPathTemplate: '{testDir}/{testFileDir}/snapshots/{arg}{ext}',
   retries: 5,
 
   // Run a local server before starting the tests
