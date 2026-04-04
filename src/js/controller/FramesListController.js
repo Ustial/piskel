@@ -190,6 +190,7 @@
     newFrameButton.id = 'add-frame-action';
     newFrameButton.className = 'add-frame-action';
     newFrameButton.setAttribute('data-tile-action', ACTION.NEW_FRAME);
+    newFrameButton.setAttribute('data-test-id', 'add-frame-button');
     newFrameButton.innerHTML = '<div class="add-frame-action-icon icon-frame-plus-white">' +
       '</div><div class="label">Add new frame</div>';
     this.previewList.appendChild(newFrameButton);
@@ -252,6 +253,7 @@
     previewTileRoot.setAttribute('data-tile-hash', currentFrame.getHash());
     previewTileRoot.setAttribute('data-tile-action', ACTION.SELECT);
     previewTileRoot.classList.add('preview-tile');
+    previewTileRoot.setAttribute('data-test-id', 'frame-tile');
     if (this.piskelController.getCurrentFrame() == currentFrame) {
       previewTileRoot.classList.add('selected');
     }
@@ -283,6 +285,7 @@
     cloneFrameButton.setAttribute('data-tile-action', ACTION.CLONE);
     cloneFrameButton.setAttribute('title', 'Duplicate this frame');
     cloneFrameButton.className = 'tile-overlay duplicate-frame-action icon-frame-duplicate-white';
+    cloneFrameButton.setAttribute('data-test-id', 'duplicate-frame-button');
     previewTileRoot.appendChild(cloneFrameButton);
 
     // Add delete button
@@ -293,6 +296,7 @@
     deleteButton.setAttribute('data-tile-number', tileNumber);
     deleteButton.setAttribute('data-tile-action', ACTION.DELETE);
     deleteButton.className = 'tile-overlay delete-frame-action icon-frame-recyclebin-white';
+    deleteButton.setAttribute('data-test-id', 'delete-frame-button');
     previewTileRoot.appendChild(deleteButton);
 
     // Add 'dragndrop handle'.
