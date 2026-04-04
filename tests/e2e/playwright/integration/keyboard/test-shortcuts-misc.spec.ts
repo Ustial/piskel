@@ -70,19 +70,31 @@ test.describe('Keyboard shortcuts — palette color select', () => {
 
     // Set a grid with 3 distinct colors so the palette has entries
     await setPiskelFromGrid(page, [['R', 'G', 'B', 'T']]);
-    // Draw a pixel to trigger palette refresh via TOOL_RELEASED
+    // Draw a pixel to trigger history state save → palette refresh
     await clickTool(page, 'tool-pen');
     await drawAtPixel(page, 3, 0);
-    await wait(500);
+
+    // Wait until the palette has at least 3 color swatches (async: throttled 1s + web worker)
+    await waitFor(async () => {
+      const count = await page.locator('.palettes-list-color').count();
+      return count >= 3;
+    }, { timeout: 5000, message: 'Palette did not populate with at least 3 colors' });
+
+    // Set primary to a color NOT in the palette so pressing "1" will cause a visible change
+    await setPrimaryColor(page, '#AABBCC');
 
     // Key "1" selects first palette color
     await page.keyboard.press('1');
-    await wait(200);
+    await waitFor(async () =>
+      (await getPrimaryColor(page)).toLowerCase() !== '#aabbcc'
+    , { timeout: 2000, message: 'Primary color did not change after pressing "1"' });
     const color1 = (await getPrimaryColor(page)).toLowerCase();
 
     // Key "2" selects second palette color
     await page.keyboard.press('2');
-    await wait(200);
+    await waitFor(async () =>
+      (await getPrimaryColor(page)).toLowerCase() !== color1
+    , { timeout: 2000, message: 'Primary color did not change after pressing "2"' });
     const color2 = (await getPrimaryColor(page)).toLowerCase();
 
     // They should be different
@@ -90,8 +102,9 @@ test.describe('Keyboard shortcuts — palette color select', () => {
 
     // Key "1" again should go back to first
     await page.keyboard.press('1');
-    await wait(200);
-    expect((await getPrimaryColor(page)).toLowerCase()).toBe(color1);
+    await waitFor(async () =>
+      (await getPrimaryColor(page)).toLowerCase() === color1
+    , { timeout: 2000, message: 'Primary color did not revert after pressing "1" again' });
   });
 });
 
