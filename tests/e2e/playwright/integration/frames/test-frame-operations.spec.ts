@@ -11,6 +11,7 @@ import {
   colorToInt,
   getFrameTiles,
   getAddFrameButton,
+  waitFor,
 } from "../../testutils";
 
 test.describe('Frame operations', () => {
@@ -175,7 +176,7 @@ test.describe('Frame operations', () => {
 
     await page.keyboard.press('n');
 
-    expect(await getCurrentPiskelFrameCount(page)).toBe(2);
+    await waitFor(async () => (await getCurrentPiskelFrameCount(page)) === 2);
   });
 
   test('should duplicate frame with content via UI button', async ({ page }) => {

@@ -13,6 +13,7 @@ import {
   getLayerName,
   testId,
   getAddLayerButton,
+  waitFor,
 } from "../../testutils";
 
 /** Save the download to a .piskel file and return the path */
@@ -94,8 +95,9 @@ test.describe('.piskel import', () => {
     // Create a sprite with 3 frames
     await setPiskelFromGrid(page, [["R", "T"], ["T", "R"]]);
     await page.keyboard.press('n');
+    await waitFor(async () => (await getCurrentPiskelFrameCount(page)) === 2);
     await page.keyboard.press('n');
-    expect(await getCurrentPiskelFrameCount(page)).toBe(3);
+    await waitFor(async () => (await getCurrentPiskelFrameCount(page)) === 3);
 
     // Save as .piskel
     await openSaveSettingsPanel(page);

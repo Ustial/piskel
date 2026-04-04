@@ -87,7 +87,7 @@ test.describe('Undo and Redo', () => {
 
     // Add a frame via keyboard
     await page.keyboard.press('n');
-    expect(await getCurrentPiskelFrameCount(page)).toBe(2);
+    await waitFor(async () => (await getCurrentPiskelFrameCount(page)) === 2);
 
     // Undo should remove the added frame
     await undo(page);
