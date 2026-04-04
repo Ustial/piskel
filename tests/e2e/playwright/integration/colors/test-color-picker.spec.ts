@@ -47,7 +47,7 @@ test.describe('Color picker', () => {
     expect((await getPrimaryColor(page)).toLowerCase()).toBe('#00ff00');
     expect((await getSecondaryColor(page)).toLowerCase()).toBe('#ff00ff');
 
-    await testId(page, 'swap-colors').click();
+    await testId(page, 'swap-colors-button').click();
 
     expect((await getPrimaryColor(page)).toLowerCase()).toBe('#ff00ff');
     expect((await getSecondaryColor(page)).toLowerCase()).toBe('#00ff00');

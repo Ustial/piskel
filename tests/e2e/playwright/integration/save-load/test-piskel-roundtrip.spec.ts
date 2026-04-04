@@ -28,7 +28,7 @@ test.describe('.piskel round-trip', () => {
     // Save as .piskel file
     await openSaveSettingsPanel(page);
     const downloadPromise = page.waitForEvent('download');
-    await testId(page, 'save-file-download').click();
+    await testId(page, 'save-file-download-button').click();
     const download = await downloadPromise;
 
     const suggestedFilename = download.suggestedFilename();

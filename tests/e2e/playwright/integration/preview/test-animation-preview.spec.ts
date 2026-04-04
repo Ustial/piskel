@@ -112,7 +112,7 @@ test.describe('Preview actions', () => {
   test('Alt+G shortcut should toggle grid', async ({ page }) => {
     await openEditor(page);
 
-    const gridButton = testId(page, 'grid-toggle');
+    const gridButton = testId(page, 'grid-toggle-button');
 
     // Grid is off by default
     await expect(gridButton).toHaveClass(/icon-minimap-grid-white/);
@@ -143,7 +143,7 @@ test.describe('Preview actions', () => {
     await openEditor(page);
     await showPreviewActions(page);
 
-    const popupBtn = testId(page, 'open-popup-preview');
+    const popupBtn = testId(page, 'open-popup-preview-button');
     await expect(popupBtn).toBeVisible();
 
     // Listen for new page (popup window)
@@ -182,7 +182,7 @@ test.describe('Preview actions', () => {
 
     await showPreviewActions(page);
     const popupPromise = context.waitForEvent('page');
-    await testId(page, 'open-popup-preview').click();
+    await testId(page, 'open-popup-preview-button').click();
     const popup = await popupPromise;
     await popup.waitForLoadState();
 
@@ -308,7 +308,7 @@ test.describe('Animation preview', () => {
     // Save as .piskel file
     await openSaveSettingsPanel(page);
     const downloadPromise = page.waitForEvent('download');
-    await testId(page, 'save-file-download').click();
+    await testId(page, 'save-file-download-button').click();
     const download = await downloadPromise;
 
     const downloadPath = await download.path();

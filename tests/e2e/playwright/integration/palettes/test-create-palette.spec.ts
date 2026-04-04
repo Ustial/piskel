@@ -6,7 +6,7 @@ test.describe('Create palette', () => {
   test('should open create palette dialog with correct default content', async ({ page }) => {
     await openEditor(page);
 
-    await testId(page, 'create-palette').click();
+    await testId(page, 'create-palette-button').click();
 
     // Dialog should be visible
     await expect(page.locator('#dialog-container-wrapper.show')).toBeAttached({ timeout: 5000 });
@@ -51,7 +51,7 @@ test.describe('Create palette', () => {
   test('should create a palette with a custom name', async ({ page }) => {
     await openEditor(page);
 
-    await testId(page, 'create-palette').click();
+    await testId(page, 'create-palette-button').click();
     await expect(page.locator('#dialog-container-wrapper.show')).toBeAttached({ timeout: 5000 });
 
     // Type palette name
@@ -75,7 +75,7 @@ test.describe('Create palette', () => {
     // Get current palette selection
     const initialPalette = await testId(page, 'palette-select').inputValue();
 
-    await testId(page, 'create-palette').click();
+    await testId(page, 'create-palette-button').click();
     await expect(page.locator('#dialog-container-wrapper.show')).toBeAttached({ timeout: 5000 });
 
     // Type a name but cancel

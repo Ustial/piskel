@@ -222,10 +222,10 @@ export const testId = (page: Page, id: string) => page.locator(`[data-test-id="$
 export const getFrameTiles = (page: Page) => testId(page, 'frame-tile');
 
 /** Locator for the "Add new frame" button */
-export const getAddFrameButton = (page: Page) => testId(page, 'add-frame');
+export const getAddFrameButton = (page: Page) => testId(page, 'add-frame-button');
 
 /** Locator for the "Add layer" button */
-export const getAddLayerButton = (page: Page) => testId(page, 'layer-add');
+export const getAddLayerButton = (page: Page) => testId(page, 'layer-add-button');
 
 /** Locator for all layer items in the layers panel */
 export const getLayerItems = (page: Page) => testId(page, 'layer-item');
@@ -234,16 +234,16 @@ export const getLayerItems = (page: Page) => testId(page, 'layer-item');
 export const getLayerNameLocators = (page: Page) => testId(page, 'layer-name');
 
 /** Locator for the "Move layer up" button */
-export const getMoveLayerUpButton = (page: Page) => testId(page, 'layer-move-up');
+export const getMoveLayerUpButton = (page: Page) => testId(page, 'layer-move-up-button');
 
 /** Locator for the "Move layer down" button */
-export const getMoveLayerDownButton = (page: Page) => testId(page, 'layer-move-down');
+export const getMoveLayerDownButton = (page: Page) => testId(page, 'layer-move-down-button');
 
 /** Locator for the "Merge layer down" button */
-export const getMergeLayerButton = (page: Page) => testId(page, 'layer-merge');
+export const getMergeLayerButton = (page: Page) => testId(page, 'layer-merge-button');
 
 /** Locator for the "Delete layer" button */
-export const getDeleteLayerButton = (page: Page) => testId(page, 'layer-delete');
+export const getDeleteLayerButton = (page: Page) => testId(page, 'layer-delete-button');
 
 /** Locator for all layer opacity (α) buttons */
 export const getAllLayerOpacityButtons = (page: Page) => testId(page, 'layer-opacity');

@@ -54,7 +54,7 @@ test.describe('Onion skin', () => {
   test('should toggle on when clicking the onion skin button', async ({ page }) => {
     await openEditor(page);
 
-    await testId(page, 'onion-skin-toggle').click();
+    await testId(page, 'onion-skin-toggle-button').click();
 
     await expect.poll(() => isOnionSkinEnabled(page), {
       timeout: 5000,
@@ -68,11 +68,11 @@ test.describe('Onion skin', () => {
     await openEditor(page);
 
     // Enable
-    await testId(page, 'onion-skin-toggle').click();
+    await testId(page, 'onion-skin-toggle-button').click();
     await expect.poll(() => isOnionSkinEnabled(page), { timeout: 5000 }).toBe(true);
 
     // Disable
-    await testId(page, 'onion-skin-toggle').click();
+    await testId(page, 'onion-skin-toggle-button').click();
     await expect.poll(() => isOnionSkinEnabled(page), { timeout: 5000 }).toBe(false);
 
     await expectHasNotClass(page, ONION_SKIN_SELECTOR, ENABLED_CLASS);
@@ -120,7 +120,7 @@ test.describe('Onion skin', () => {
     expect(beforePixel.a).toBe(0);
 
     // Enable onion skin
-    await testId(page, 'onion-skin-toggle').click();
+    await testId(page, 'onion-skin-toggle-button').click();
     await expect.poll(() => isOnionSkinEnabled(page), { timeout: 5000 }).toBe(true);
 
     // Wait for onion skin to render frame 0's red pixel at (1,1)
@@ -159,7 +159,7 @@ test.describe('Onion skin', () => {
     await waitFor(async () => (await getFrameTiles(page).count()) === 2);
 
     // Enable onion skin — should render frame 0's red pixel
-    await testId(page, 'onion-skin-toggle').click();
+    await testId(page, 'onion-skin-toggle-button').click();
     await expect.poll(() => isOnionSkinEnabled(page), { timeout: 5000 }).toBe(true);
 
     await waitFor(async () => {
@@ -169,7 +169,7 @@ test.describe('Onion skin', () => {
     expect((await getOnionSkinPixel(page, 1, 1)).r).toBe(255);
 
     // Disable onion skin — canvas should clear
-    await testId(page, 'onion-skin-toggle').click();
+    await testId(page, 'onion-skin-toggle-button').click();
     await expect.poll(() => isOnionSkinEnabled(page), { timeout: 5000 }).toBe(false);
     await wait(500);
 

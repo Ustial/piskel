@@ -74,7 +74,7 @@ test.describe('Layer operations', () => {
     await openEditor(page);
 
     // Click the edit/rename button
-    await testId(page, 'layer-edit').click();
+    await testId(page, 'layer-edit-button').click();
 
     // The rename input should appear
     const renameInput = testId(page, 'layer-name-input');
@@ -113,7 +113,7 @@ test.describe('Layer operations', () => {
     const originalName = await getLayerName(page, 0);
 
     // Start renaming
-    await testId(page, 'layer-edit').click();
+    await testId(page, 'layer-edit-button').click();
     const renameInput = testId(page, 'layer-name-input');
     await expect(renameInput).toBeAttached();
 

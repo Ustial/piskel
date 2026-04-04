@@ -226,7 +226,7 @@ test.describe('Move tool', () => {
     await drawAtPixel(page, 2, 2);
 
     // Add layer 1 and draw a dot at (2,4)
-    await page.locator('[data-test-id="layer-add"]').click();
+    await page.locator('[data-test-id="layer-add-button"]').click();
     await drawAtPixel(page, 2, 4);
 
     // Verify dots on each layer

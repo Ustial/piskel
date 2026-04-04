@@ -58,7 +58,7 @@ test.describe('.piskel import', () => {
     await getAddLayerButton(page).click();
 
     // Rename second layer for identification
-    await testId(page, 'layer-edit').click();
+    await testId(page, 'layer-edit-button').click();
     const renameInput = testId(page, 'layer-name-input');
     await renameInput.fill('Top Layer');
     await renameInput.press('Enter');
@@ -68,7 +68,7 @@ test.describe('.piskel import', () => {
     // Save as .piskel
     await openSaveSettingsPanel(page);
     const downloadPromise = page.waitForEvent('download');
-    await testId(page, 'save-file-download').click();
+    await testId(page, 'save-file-download-button').click();
     const download = await downloadPromise;
     const piskelPath = await saveToPiskelFile(download, 'test-layers.piskel');
 
@@ -102,7 +102,7 @@ test.describe('.piskel import', () => {
     // Save as .piskel
     await openSaveSettingsPanel(page);
     const downloadPromise = page.waitForEvent('download');
-    await testId(page, 'save-file-download').click();
+    await testId(page, 'save-file-download-button').click();
     const download = await downloadPromise;
     const piskelPath = await saveToPiskelFile(download, 'test-frames.piskel');
 

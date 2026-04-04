@@ -57,7 +57,7 @@ test.describe('Frame operations', () => {
 
     // Hover on the frame tile to reveal the duplicate button, then click
     await getFrameTiles(page).nth(0).hover();
-    await testId(page, 'duplicate-frame').nth(0).click();
+    await testId(page, 'duplicate-frame-button').nth(0).click();
 
     expect(await getCurrentPiskelFrameCount(page)).toBe(2);
 
@@ -75,7 +75,7 @@ test.describe('Frame operations', () => {
 
     // Hover on frame tile 1 and delete it
     await getFrameTiles(page).nth(1).hover();
-    await testId(page, 'delete-frame').nth(1).click();
+    await testId(page, 'delete-frame-button').nth(1).click();
 
     expect(await getCurrentPiskelFrameCount(page)).toBe(1);
     await expect(getFrameTiles(page)).toHaveCount(1);
@@ -98,7 +98,7 @@ test.describe('Frame operations', () => {
 
     // Delete frame 0 (the red one)
     await getFrameTiles(page).nth(0).hover();
-    await testId(page, 'delete-frame').nth(0).click();
+    await testId(page, 'delete-frame-button').nth(0).click();
 
     // Only 1 frame remains — it should be the green one
     expect(await getCurrentPiskelFrameCount(page)).toBe(1);
@@ -127,7 +127,7 @@ test.describe('Frame operations', () => {
 
     // Delete middle frame (green, index 1)
     await getFrameTiles(page).nth(1).hover();
-    await testId(page, 'delete-frame').nth(1).click();
+    await testId(page, 'delete-frame-button').nth(1).click();
 
     // 2 frames remain: red (index 0) and blue (index 1)
     expect(await getCurrentPiskelFrameCount(page)).toBe(2);
@@ -188,7 +188,7 @@ test.describe('Frame operations', () => {
 
     // Duplicate via the frame tile button
     await getFrameTiles(page).nth(0).hover();
-    await testId(page, 'duplicate-frame').nth(0).click();
+    await testId(page, 'duplicate-frame-button').nth(0).click();
 
     expect(await getCurrentPiskelFrameCount(page)).toBe(2);
     // Duplicated frame should have the same black pixel (default primary color)
@@ -218,7 +218,7 @@ test.describe('Frame operations', () => {
 
     // Duplicate frame 1 (green)
     await getFrameTiles(page).nth(1).hover();
-    await testId(page, 'duplicate-frame').nth(1).click();
+    await testId(page, 'duplicate-frame-button').nth(1).click();
 
     // Should now have 4 frames: red, green, green-copy, blue
     expect(await getCurrentPiskelFrameCount(page)).toBe(4);

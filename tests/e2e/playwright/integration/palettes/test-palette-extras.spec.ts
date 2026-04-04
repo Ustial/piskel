@@ -21,7 +21,7 @@ async function selectPaletteByName(page: Page, name: string) {
 
 /** Create a simple palette with a given name and save it */
 async function createPalette(page: Page, name: string) {
-  await testId(page, 'create-palette').click();
+  await testId(page, 'create-palette-button').click();
   await expect(page.locator('#dialog-container-wrapper.show')).toBeAttached({ timeout: 5000 });
   await page.locator('input[name="palette-name"]').fill(name);
   await page.locator('.create-palette-submit').click();
@@ -94,7 +94,7 @@ test.describe('Palette extras — import .gpl', () => {
     await openEditor(page);
 
     // Open create palette dialog
-    await testId(page, 'create-palette').click();
+    await testId(page, 'create-palette-button').click();
     await expect(page.locator('#dialog-container-wrapper.show')).toBeAttached({ timeout: 5000 });
 
     // Create a .gpl file content

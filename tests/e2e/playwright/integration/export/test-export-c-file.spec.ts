@@ -104,7 +104,7 @@ test.describe('C file export', () => {
     await expect(page.locator('.export-panel-misc')).toBeAttached();
 
     const downloadPromise = page.waitForEvent('download');
-    await testId(page, 'c-file-download').click();
+    await testId(page, 'c-file-download-button').click();
     const download = await downloadPromise;
 
     const path = await download.path();
@@ -138,7 +138,7 @@ test.describe('C file export', () => {
     await expect(page.locator('.export-panel-misc')).toBeAttached();
 
     const downloadPromise = page.waitForEvent('download');
-    await testId(page, 'c-file-download').click();
+    await testId(page, 'c-file-download-button').click();
     const download = await downloadPromise;
 
     const path = await download.path();

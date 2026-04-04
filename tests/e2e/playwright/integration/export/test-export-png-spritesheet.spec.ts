@@ -36,7 +36,7 @@ test.describe('PNG spritesheet export', () => {
     await expect(page.locator('[name="png-export-rows"]')).toHaveValue('1');
 
     const downloadPromise = page.waitForEvent('download');
-    await testId(page, 'png-download').click();
+    await testId(page, 'png-download-button').click();
     const download = await downloadPromise;
 
     const path = await download.path();
@@ -76,7 +76,7 @@ test.describe('PNG spritesheet export', () => {
     await expect(page.locator('.export-panel-png')).toBeAttached();
 
     const downloadPromise = page.waitForEvent('download');
-    await testId(page, 'png-selected-frame-download').click();
+    await testId(page, 'png-selected-frame-download-button').click();
     const download = await downloadPromise;
 
     const path = await download.path();
@@ -125,7 +125,7 @@ test.describe('PNG spritesheet export', () => {
     await expect(page.locator('[name="png-export-rows"]')).toHaveValue('4');
 
     const downloadPromise = page.waitForEvent('download');
-    await testId(page, 'png-download').click();
+    await testId(page, 'png-download-button').click();
     const download = await downloadPromise;
 
     const path = await download.path();
@@ -188,7 +188,7 @@ test.describe('PNG spritesheet export', () => {
     await expect(page.locator('[name="png-export-rows"]')).toHaveValue('2');
 
     const downloadPromise = page.waitForEvent('download');
-    await testId(page, 'png-download').click();
+    await testId(page, 'png-download-button').click();
     const download = await downloadPromise;
 
     const path = await download.path();
@@ -239,7 +239,7 @@ test.describe('PNG spritesheet export', () => {
     await expect(page.locator('[name="resize-height"]')).toHaveValue('10');
 
     const downloadPromise = page.waitForEvent('download');
-    await testId(page, 'png-download').click();
+    await testId(page, 'png-download-button').click();
     const download = await downloadPromise;
 
     const path = await download.path();

@@ -42,7 +42,7 @@ test.describe('ZIP export', () => {
     await expect(page.locator('.export-panel-zip')).toBeAttached();
 
     const downloadPromise = page.waitForEvent('download');
-    await testId(page, 'zip-download').click();
+    await testId(page, 'zip-download-button').click();
     const download = await downloadPromise;
 
     const path = await download.path();
@@ -97,7 +97,7 @@ test.describe('ZIP export', () => {
     await prefixInput.fill('mysprite_');
 
     const downloadPromise = page.waitForEvent('download');
-    await testId(page, 'zip-download').click();
+    await testId(page, 'zip-download-button').click();
     const download = await downloadPromise;
 
     const path = await download.path();
@@ -146,7 +146,7 @@ test.describe('ZIP export', () => {
     await page.locator('#zip-split-layers').check();
 
     const downloadPromise = page.waitForEvent('download');
-    await testId(page, 'zip-download').click();
+    await testId(page, 'zip-download-button').click();
     const download = await downloadPromise;
 
     const path = await download.path();

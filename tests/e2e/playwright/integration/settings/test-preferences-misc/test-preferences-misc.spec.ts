@@ -176,7 +176,7 @@ test.describe('Preferences — Misc tab', () => {
       ['T', 'T', 'T', 'T'],
       ['T', 'T', 'T', 'T'],
     ]);
-    await page.locator('[data-test-id="layer-add"]').click();
+    await page.locator('[data-test-id="layer-add-button"]').click();
     await wait(300);
 
     await openMiscPreferences(page);
