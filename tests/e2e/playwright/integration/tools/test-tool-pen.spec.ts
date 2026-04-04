@@ -1,10 +1,10 @@
-import test, { expect } from "@playwright/test";
+import test from "@playwright/test";
 import {
   clickTool,
   drawAtPixel,
   openEditor,
-  readPixelGrid,
   setPiskelFromGrid,
+  waitForGrid,
 } from "../../testutils";
 
 /** Create an NxN transparent TestGrid */
@@ -23,9 +23,7 @@ test.describe('Pen tool', () => {
     await drawAtPixel(page, 5, 5);
     await drawAtPixel(page, 7, 3);
 
-    const grid = await readPixelGrid(page, 10, 10);
-
-    const expected = [
+    await waitForGrid(page, 10, 10, [
       '..........',  // row 0
       '..........',  // row 1
       '..X.......',  // row 2
@@ -36,7 +34,6 @@ test.describe('Pen tool', () => {
       '..........',  // row 7
       '..........',  // row 8
       '..........',  // row 9
-    ];
-    expect(grid.map(r => r.join(''))).toEqual(expected);
+    ]);
   });
 });

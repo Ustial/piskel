@@ -1,22 +1,11 @@
-import test, { expect, Page } from "@playwright/test";
+import test from "@playwright/test";
 import {
   clickTool,
+  dragBetweenPixels,
   openEditor,
-  readPixelGrid,
   setPiskelFromGrid,
+  waitForGrid,
 } from "../../testutils";
-
-/** Drag from sprite pixel (x1,y1) to (x2,y2) */
-async function dragBetweenPixels(page: Page, x1: number, y1: number, x2: number, y2: number) {
-  const start = await page.evaluate(({ col, row }) =>
-    window.pskl.app.drawingController.getScreenCoordinates(col, row), { col: x1, row: y1 });
-  const end = await page.evaluate(({ col, row }) =>
-    window.pskl.app.drawingController.getScreenCoordinates(col, row), { col: x2, row: y2 });
-  await page.mouse.move(start.x, start.y);
-  await page.mouse.down();
-  await page.mouse.move(end.x, end.y, { steps: 5 });
-  await page.mouse.up();
-}
 
 /** Create an NxN transparent TestGrid */
 function emptyTestGrid(size = 10): ("T")[][] {
@@ -32,9 +21,7 @@ test.describe('Circle tool', () => {
 
     await dragBetweenPixels(page, 1, 1, 8, 8);
 
-    const grid = await readPixelGrid(page, 10, 10);
-
-    const expected = [
+    await waitForGrid(page, 10, 10, [
       '..........',  // row 0
       '...XXXX...',  // row 1
       '..X....X..',  // row 2
@@ -45,8 +32,7 @@ test.describe('Circle tool', () => {
       '..X....X..',  // row 7
       '...XXXX...',  // row 8
       '..........',  // row 9
-    ];
-    expect(grid.map(r => r.join(''))).toEqual(expected);
+    ]);
   });
 
   test('circle tool + Shift: constrains to perfect circle', async ({ page }) => {
@@ -55,6 +41,7 @@ test.describe('Circle tool', () => {
     await clickTool(page, 'tool-circle');
 
     // Drag from (1,1) to (8,5) with Shift — should constrain to a circle with equal width/height
+    await page.evaluate(() => new Promise(resolve => setTimeout(resolve, 200)));
     const start = await page.evaluate(({ col, row }) =>
       window.pskl.app.drawingController.getScreenCoordinates(col, row), { col: 1, row: 1 });
     const end = await page.evaluate(({ col, row }) =>
@@ -67,9 +54,7 @@ test.describe('Circle tool', () => {
     await page.mouse.up();
     await page.keyboard.up('Shift');
 
-    const grid = await readPixelGrid(page, 10, 10);
-
-    const expected = [
+    await waitForGrid(page, 10, 10, [
       '..........',
       '..XXX.....',
       '.X...X....',
@@ -80,7 +65,6 @@ test.describe('Circle tool', () => {
       '..........',
       '..........',
       '..........',
-    ];
-    expect(grid.map(r => r.join(''))).toEqual(expected);
+    ]);
   });
 });

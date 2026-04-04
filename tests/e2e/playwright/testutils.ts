@@ -347,6 +347,26 @@ export const readPixelGrid = async (page: Page, width: number, height: number, l
   }, { width, height, layerIndex, frameIndex });
 };
 
+/**
+ * Drag from sprite pixel (x1,y1) to (x2,y2) via real mouse events.
+ * Waits for any pending relayout before computing coordinates (same as drawAtPixel).
+ */
+export const dragBetweenPixels = async (
+  page: Page, x1: number, y1: number, x2: number, y2: number, options?: { steps?: number }
+): Promise<void> => {
+  const steps = options?.steps ?? 5;
+  // Wait for any pending relayout (DrawingController uses setTimeout(200) for relayout)
+  await page.evaluate(() => new Promise(resolve => setTimeout(resolve, 210)));
+  const start = await page.evaluate(({ col, row }) =>
+    window.pskl.app.drawingController.getScreenCoordinates(col, row), { col: x1, row: y1 });
+  const end = await page.evaluate(({ col, row }) =>
+    window.pskl.app.drawingController.getScreenCoordinates(col, row), { col: x2, row: y2 });
+  await page.mouse.move(start.x, start.y);
+  await page.mouse.down();
+  await page.mouse.move(end.x, end.y, { steps });
+  await page.mouse.up();
+};
+
 /** Simple async delay. Use sparingly — prefer waitFor for state checks. */
 export const wait = (ms: number) => new Promise(r => setTimeout(r, ms));
 
@@ -368,6 +388,38 @@ export const waitFor = async (
   if (!(await fn())) {
     throw new Error(message ?? `waitFor: condition not met after ${timeout}ms`);
   }
+};
+
+/**
+ * Poll until a specific pixel reaches the expected color.
+ * Use after drawing operations to avoid reading stale model state.
+ */
+export const waitForPixelUpdate = async (
+  page: Page, col: number, row: number, expectedColor: number,
+  { timeout = 2000, interval = 50, layerIndex = 0, frameIndex = 0 }:
+  { timeout?: number; interval?: number; layerIndex?: number; frameIndex?: number } = {}
+): Promise<void> => {
+  await waitFor(
+    async () => (await getPixelColor(page, col, row, layerIndex, frameIndex)) === expectedColor,
+    { timeout, interval, message: `Pixel (${col},${row}) did not reach expected color within ${timeout}ms` }
+  );
+};
+
+/**
+ * Poll until the pixel grid matches the expected pattern.
+ * Replaces immediate readPixelGrid + expect for flake-free shape verification.
+ */
+export const waitForGrid = async (
+  page: Page, width: number, height: number, expectedGrid: string[],
+  { layerIndex = 0, frameIndex = 0, timeout = 2000, interval = 50 }:
+  { layerIndex?: number; frameIndex?: number; timeout?: number; interval?: number } = {}
+): Promise<void> => {
+  let lastGrid: string[] = [];
+  await waitFor(async () => {
+    const grid = await readPixelGrid(page, width, height, layerIndex, frameIndex);
+    lastGrid = grid.map(r => r.join(''));
+    return lastGrid.join('\n') === expectedGrid.join('\n');
+  }, { timeout, interval, message: `Grid did not match expected pattern within ${timeout}ms.\nExpected:\n${expectedGrid.join('\n')}\nGot:\n${lastGrid.join('\n')}` });
 };
 
 /**
