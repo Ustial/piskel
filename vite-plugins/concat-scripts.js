@@ -1,6 +1,5 @@
 /**
- * Rollup/Vite plugin that concatenates scripts and styles in order,
- * replicating grunt-contrib-concat + grunt-contrib-uglify behavior.
+ * Rollup/Vite plugin that concatenates scripts and styles in order.
  *
  * Reads piskel-script-list.js and piskel-style-list.js (Node-compatible)
  * and emits concatenated bundles with versioned filenames.

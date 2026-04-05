@@ -2,7 +2,6 @@
 
 /**
  * NW.js desktop packaging script.
- * Replaces grunt-nw-builder tasks.
  *
  * Usage:
  *   node scripts/desktop.js                          # Build for Windows + Linux
@@ -21,7 +20,7 @@ const args = process.argv.slice(2);
 const platformArg = args.find(a => a.startsWith('--platform='));
 const platform = platformArg ? platformArg.split('=')[1] : 'windows-linux';
 
-// Source directories: prod build + package.json (same as Grunt config)
+// Source directories: prod build + package.json
 const srcDir = path.resolve(ROOT, 'dest/prod') + '/**/* ' + path.resolve(ROOT, 'package.json');
 
 // Each entry is an array of { platform, arch } targets to build sequentially.

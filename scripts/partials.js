@@ -2,7 +2,6 @@
 
 /**
  * Jekyll partial generation script.
- * Replaces grunt-replace partial tasks.
  *
  * Reads dest/prod/index.html and generates 3 Jekyll-compatible HTML variants
  * for piskelapp.com integration.

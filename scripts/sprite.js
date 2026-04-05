@@ -1,8 +1,7 @@
 #!/usr/bin/env node
 
 /**
- * Sprite generation script.
- * Replaces grunt-spritesmith: generates sprite sheets + retina + CSS.
+ * Sprite generation script: generates sprite sheets + retina + CSS.
  *
  * Input: src/img/icons/**\/*.png
  * Output: src/img/icons.png, src/img/icons@2x.png, src/css/icons.css

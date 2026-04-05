@@ -2,8 +2,6 @@
  * Vite plugin that replaces var(--highlight-color) with 'gold'
  * in CSS output during production builds.
  *
- * Replaces grunt-replace:css functionality.
- *
  * Note: The concat-scripts plugin also applies this replacement
  * to the concatenated CSS bundle. This plugin is a safety net
  * for any CSS that Vite processes through its normal pipeline.

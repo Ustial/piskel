@@ -1,8 +1,6 @@
 /**
  * Vite plugin that processes @@include() directives and @@variable
  * replacements in src/index.html, then emits the result as index.html.
- *
- * Replaces grunt-include-replace functionality.
  */
 
 const fs = require('fs');
