@@ -10,7 +10,7 @@ export default defineConfig({
 
   // Run a local server before starting the tests
   webServer: {
-    command: 'npm run vite:test-server',
+    command: 'npm run start:test',
     url: baseUrl,
     reuseExistingServer: true,
     stdout: 'ignore',
