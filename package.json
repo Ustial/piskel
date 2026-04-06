@@ -32,7 +32,6 @@
     
     "build:desktop": "npm run lint && npm run build && node scripts/desktop.js",
     "build:mac": "npm run lint && npm run build && node scripts/desktop.js --platform=macos",
-    "build:mac-old": "npm run lint && npm run build && node scripts/desktop.js --platform=macos-old",
     "start:nw": "npm run build && nw",
 
     "e2e": "npx playwright test",
@@ -61,6 +60,7 @@
     "karma-chrome-launcher": "^3.2.0",
     "karma-jasmine": "4.0.1",
     "magic-string": "^0.30.21",
+    "nw-builder": "^4.17.5",
     "png-ts": "^0.0.3",
     "puppeteer": "^24.10.0",
     "rmdir": "1.2.0",

@@ -6,28 +6,30 @@
  * Usage:
  *   node scripts/desktop.js                          # Build for Windows + Linux
  *   node scripts/desktop.js --platform=macos         # Build for macOS
- *   node scripts/desktop.js --platform=macos-old     # Build for macOS (legacy nwjs 0.12.3)
+
  */
 
 const fs = require('fs');
 const path = require('path');
+const { execSync } = require('child_process');
 
 const ROOT = path.resolve(__dirname, '..');
 const DESKTOP_DIR = path.resolve(ROOT, 'dest/desktop');
+const CACHE_DIR = path.resolve(ROOT, 'cache');
 
 // Parse --platform argument
 const args = process.argv.slice(2);
 const platformArg = args.find(a => a.startsWith('--platform='));
 const platform = platformArg ? platformArg.split('=')[1] : 'windows-linux';
 
-// Source directories: prod build + package.json
-const srcDir = path.resolve(ROOT, 'dest/prod') + '/**/* ' + path.resolve(ROOT, 'package.json');
+// Source directories: prod build + package.json (relative globs for nw-builder v4)
+const srcDir = 'dest/prod/**/* package.json';
 
-// Each entry is an array of { platform, arch } targets to build sequentially.
-// nw-builder v4 accepts only a single platform/arch per call.
+const NW_VERSION = '0.110.1';
+
 const configs = {
   'windows-linux': {
-    version: '0.19.4',
+    version: NW_VERSION,
     flavor: 'normal',
     targets: [
       { platform: 'win', arch: 'ia32' },
@@ -38,23 +40,60 @@ const configs = {
     outDir: DESKTOP_DIR,
   },
   macos: {
-    version: '0.19.4',
+    version: NW_VERSION,
     flavor: 'normal',
     targets: [{ platform: 'osx', arch: 'x64' }],
     outDir: DESKTOP_DIR,
   },
-  'macos-old': {
-    version: '0.12.3',
-    flavor: 'normal',
-    targets: [{ platform: 'osx', arch: 'x64' }],
-    outDir: path.resolve(DESKTOP_DIR, 'old'),
-  },
 };
 
+/**
+ * Pre-download NW.js binaries using curl (handles redirects reliably).
+ * nw-builder's built-in downloader fails on redirecting servers.
+ */
+function ensureCached(version, flavor, plat, arch) {
+  fs.mkdirSync(CACHE_DIR, { recursive: true });
+
+  var prefix = flavor === 'sdk' ? 'nwjs-sdk' : 'nwjs';
+  var ext = plat === 'linux' ? 'tar.gz' : 'zip';
+  var filename = prefix + '-v' + version + '-' + plat + '-' + arch + '.' + ext;
+  var filePath = path.resolve(CACHE_DIR, filename);
+
+  if (fs.existsSync(filePath) && fs.statSync(filePath).size > 0) {
+    console.log('    Using cached: ' + filename);
+    return;
+  }
+
+  var url = 'https://dl.nwjs.io/v' + version + '/' + filename;
+  console.log('    Downloading: ' + url);
+  execSync('curl -L -f -o "' + filePath + '" "' + url + '"', {
+    stdio: 'inherit',
+    timeout: 300000,
+  });
+}
+
+function ensureShasums(version) {
+  var shasumDir = path.resolve(CACHE_DIR, 'shasum');
+  fs.mkdirSync(shasumDir, { recursive: true });
+  var filePath = path.resolve(shasumDir, version + '.txt');
+
+  if (fs.existsSync(filePath) && fs.statSync(filePath).size > 0) {
+    console.log('  Using cached SHASUMS');
+    return;
+  }
+
+  var url = 'https://dl.nwjs.io/v' + version + '/SHASUMS256.txt';
+  console.log('  Downloading SHASUMS: ' + url);
+  execSync('curl -L -f -o "' + filePath + '" "' + url + '"', {
+    stdio: 'inherit',
+    timeout: 30000,
+  });
+}
+
 async function main() {
-  const config = configs[platform];
+  var config = configs[platform];
   if (!config) {
-    console.error(`Unknown platform: ${platform}. Valid: windows-linux, macos, macos-old`);
+    console.error('Unknown platform: ' + platform + '. Valid: windows-linux, macos');
     process.exit(1);
   }
 
@@ -64,15 +103,24 @@ async function main() {
   }
   fs.mkdirSync(config.outDir, { recursive: true });
 
+  console.log('Building desktop app for ' + platform + '...');
+  console.log('  nw.js version: ' + config.version);
+  console.log('  Output: ' + config.outDir);
+
+  // Pre-download all binaries and SHASUMS with curl
+  // (nw-builder's built-in downloader fails on redirecting servers)
+  for (var target of config.targets) {
+    console.log('\n  Downloading ' + target.platform + '-' + target.arch + '...');
+    ensureCached(config.version, config.flavor, target.platform, target.arch);
+  }
+  ensureShasums(config.version);
+
   // nw-builder v4 is ESM-only
-  const { default: nwbuild } = await import('nw-builder');
+  var nwbuild = (await import('nw-builder')).default;
 
-  console.log(`Building desktop app for ${platform}...`);
-  console.log(`  nw.js version: ${config.version}`);
-  console.log(`  Output: ${config.outDir}`);
-
-  for (const target of config.targets) {
-    console.log(`\n  Building ${target.platform}-${target.arch}...`);
+  for (var target of config.targets) {
+    var targetOutDir = path.resolve(config.outDir, target.platform + '-' + target.arch);
+    console.log('\n  Building ' + target.platform + '-' + target.arch + '...');
     await nwbuild({
       mode: 'build',
       version: config.version,
@@ -80,10 +128,12 @@ async function main() {
       platform: target.platform,
       arch: target.arch,
       srcDir: srcDir,
-      outDir: config.outDir,
+      outDir: targetOutDir,
+      cacheDir: CACHE_DIR,
       downloadUrl: 'https://dl.nwjs.io/',
       manifestUrl: 'https://nwjs.io/versions.json',
       glob: true,
+      shaSum: false,
       logLevel: 'info',
     });
   }
@@ -91,7 +141,7 @@ async function main() {
   console.log('\nDesktop build complete.');
 }
 
-main().catch(err => {
+main().catch(function (err) {
   console.error('Desktop build failed:', err);
   process.exit(1);
 });
