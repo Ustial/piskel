@@ -45,7 +45,7 @@
     // Ensure the currently the selected layer is visible.
     var currentLayerEl = this.layersListEl.querySelector('.current-layer-item');
     if (currentLayerEl) {
-      currentLayerEl.scrollIntoViewIfNeeded(false);
+      currentLayerEl.scrollIntoView({ block: 'nearest' });
     }
   };
 
