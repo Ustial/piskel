@@ -15,7 +15,7 @@
       if (isNode) {
         try {
           isNodeWebkit = typeof window.require("nw.gui") !== "undefined";
-        } catch (e) {
+        } catch {
           isNodeWebkit = false;
         }
       }

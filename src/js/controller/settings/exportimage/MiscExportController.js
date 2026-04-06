@@ -1,8 +1,6 @@
 (function () {
   var ns = $.namespace("pskl.controller.settings.exportimage");
 
-  var BLACK = "#000000";
-
   ns.MiscExportController = function (piskelController) {
     this.piskelController = piskelController;
   };

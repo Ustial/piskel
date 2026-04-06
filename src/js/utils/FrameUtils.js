@@ -1,6 +1,5 @@
 (function () {
   var ns = $.namespace("pskl.utils");
-  var colorCache = {};
   var offCanvasPool = {};
   var imageDataPool = {};
   ns.FrameUtils = {

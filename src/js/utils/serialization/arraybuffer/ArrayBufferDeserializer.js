@@ -18,13 +18,12 @@
       var buffer = data;
       var arr8 = new Uint8Array(buffer);
       var arr16 = new Uint16Array(arr8.buffer);
-      var sub;
 
       /********/
       /* META */
       /********/
       // Piskel meta
-      var modelVersion = arr16[0];
+      // var _modelVersion = arr16[0];
       var width = arr16[1];
       var height = arr16[2];
       var fps = arr16[3];
@@ -74,7 +73,6 @@
       var layer;
       for (i = 0; i < layerCount; i++) {
         layer = {};
-        var frames = [];
 
         // Meta
         var layerNameLength = arr16[currentIndex];

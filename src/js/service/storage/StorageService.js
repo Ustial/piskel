@@ -86,7 +86,6 @@
   };
 
   ns.StorageService.prototype.onSaveKey_ = function (charkey) {
-    var piskel = this.piskelController.getPiskel();
     if (pskl.app.isLoggedIn()) {
       this.saveToGallery(this.piskelController.getPiskel());
     } else if (pskl.utils.Environment.detectNodeWebkit()) {

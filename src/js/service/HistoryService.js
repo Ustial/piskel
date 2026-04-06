@@ -220,7 +220,6 @@
 
   ns.HistoryService.prototype.replayState = function (state) {
     var action = state.action;
-    var type = action.type;
     var layer = this.piskelController.getLayerAt(state.layerIndex);
     var frame = layer.getFrameAt(state.frameIndex);
     action.scope.replay(frame, action.replay);

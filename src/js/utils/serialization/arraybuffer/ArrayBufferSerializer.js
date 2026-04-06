@@ -43,12 +43,9 @@
 
   ns.ArrayBufferSerializer = {
     calculateRequiredBytes: function (piskel, framesData) {
-      var width = piskel.getWidth();
-      var height = piskel.getHeight();
       var descriptorNameLength = piskel.getDescriptor().name.length;
       var descriptorDescriptionLength =
         piskel.getDescriptor().description.length;
-      var layersLength = piskel.getLayers().length;
 
       var bytes = 0;
 
@@ -104,7 +101,6 @@
         framesData.push({ uri: dataUri, length: dataUriLength });
       }
 
-      var frames = pskl.app.piskelController.getLayerAt(0).getFrames();
       var hiddenFrames = piskel.hiddenFrames;
       var serializedHiddenFrames = hiddenFrames.join("-");
 

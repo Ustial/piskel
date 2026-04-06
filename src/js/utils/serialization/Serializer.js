@@ -88,7 +88,7 @@
       try {
         var renderer = new pskl.rendering.FramesheetRenderer(frames);
         return renderer.renderAsCanvas().toDataURL();
-      } catch (e) {
+      } catch {
         return "";
       }
     }

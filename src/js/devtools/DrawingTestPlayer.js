@@ -45,8 +45,7 @@
     $.publish(Events.SELECT_TOOL, [this.initialState.selectedTool]);
 
     // Old tests do not have penSize stored in initialState, fallback to 1.
-    var penSize = this.initialState.penSize || 1;
-    pskl.app.penSizeService.setPenSize(this.initialState.penSize);
+    pskl.app.penSizeService.setPenSize(this.initialState.penSize || 1);
   };
 
   ns.DrawingTestPlayer.prototype.createPiskel_ = function (width, height) {

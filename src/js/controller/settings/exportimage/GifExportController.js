@@ -1,7 +1,6 @@
 (function () {
   var ns = $.namespace("pskl.controller.settings.exportimage");
 
-  var URL_MAX_LENGTH = 30;
   var MAX_GIF_COLORS = 256;
   var MAGIC_PINK = "#FF00FF";
   var WHITE = "#FFFFFF";

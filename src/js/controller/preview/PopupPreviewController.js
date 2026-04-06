@@ -95,7 +95,6 @@
   };
 
   ns.PopupPreviewController.prototype.onPopupClosed_ = function () {
-    var popup = this.popup;
     this.popup = null;
   };
 

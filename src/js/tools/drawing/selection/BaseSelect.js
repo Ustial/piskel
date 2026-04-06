@@ -228,9 +228,6 @@
     var deltaCol = col - this.lastMoveCol;
     var deltaRow = row - this.lastMoveRow;
 
-    var colDiff = col - this.startCol;
-    var rowDiff = row - this.startRow;
-
     this.selection.move(deltaCol, deltaRow);
 
     overlay.clear();

@@ -133,7 +133,7 @@
           return;
         }
       }
-    } catch (e) {
+    } catch {
       // Some of the clipboard APIs are not available on Safari/IE
       // Allow Piskel to fallback on local currentSelection pasting.
     }
@@ -156,7 +156,7 @@
   };
 
   ns.SelectionManager.prototype.pasteText_ = function (clipboardItem) {
-    var blob = clipboardItem.getAsString(
+    var _blob = clipboardItem.getAsString(
       function (selectionString) {
         var selectionData = JSON.parse(selectionString);
         var time = selectionData.time;

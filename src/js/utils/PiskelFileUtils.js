@@ -43,12 +43,12 @@
 
       try {
         serializedPiskel = JSON.parse(rawPiskel);
-      } catch (e) {
+      } catch (_e) {
         onError(ns.PiskelFileUtils.FAILURE.INVALID);
         return;
       }
 
-      var piskel = serializedPiskel.piskel;
+      var _piskel = serializedPiskel.piskel;
       pskl.utils.serialization.Deserializer.deserialize(
         serializedPiskel,
         onSuccess,

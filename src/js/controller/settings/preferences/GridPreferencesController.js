@@ -66,7 +66,6 @@
     );
 
     var gridColor = pskl.UserSettings.get(pskl.UserSettings.GRID_COLOR);
-    var gridColorSelect = document.querySelector("#grid-color");
 
     var markup = "";
     Object.keys(colorsMap).forEach(function (key, index) {

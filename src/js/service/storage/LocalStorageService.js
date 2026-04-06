@@ -36,7 +36,6 @@
 
   ns.LocalStorageService.prototype.load = function (name) {
     var piskelString = this.getPiskel(name);
-    var key = this.getKey_(name);
 
     pskl.utils.serialization.Deserializer.deserialize(
       JSON.parse(piskelString),

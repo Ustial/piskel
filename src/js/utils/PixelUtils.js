@@ -145,7 +145,7 @@
       var targetColor;
       try {
         targetColor = frame.getPixel(col, row);
-      } catch (e) {
+      } catch {
         // Frame out of bound exception.
       }
 
@@ -184,9 +184,6 @@
      * @return {Array} the array of visited pixels {col, row}
      */
     visitConnectedPixels: function (pixel, frame, pixelVisitor) {
-      var col = pixel.col;
-      var row = pixel.row;
-
       var queue = [];
       var visitedPixels = [];
       var dy = [-1, 0, 1, 0];
@@ -213,7 +210,7 @@
               queue.push(connectedPixel);
               visitedPixels.push(connectedPixel);
             }
-          } catch (e) {
+          } catch {
             // Frame out of bound exception.
           }
         }

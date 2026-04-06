@@ -42,7 +42,6 @@
             migrateSprite(index + 1);
           })
           .catch(function (e) {
-            var success = false;
             console.error(
               "Failed to migrate local storage sprite for name: " + data.name
             );
