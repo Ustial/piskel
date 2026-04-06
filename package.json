@@ -53,6 +53,7 @@
     "@types/adm-zip": "^0.5.8",
     "adm-zip": "^0.5.16",
     "dateformat": "4.5.1",
+    "eslint": "7.32.0",
     "fs-extra": "10.0.0",
     "gifuct-js": "^2.1.2",
     "jasmine-core": "3.8.0",
