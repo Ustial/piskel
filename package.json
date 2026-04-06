@@ -22,6 +22,7 @@
   },
   "main": "./dest/prod/index.html",
   "scripts": {
+    "prepare": "husky",
     "build": "npm run build:sprites && vite build && node scripts/partials.js",
     "build:sprites": "node scripts/sprite.js",
     "start": "npm run build && node scripts/serve.js",
@@ -50,6 +51,7 @@
     "dateformat": "4.5.1",
     "fs-extra": "10.0.0",
     "gifuct-js": "^2.1.2",
+    "husky": "^9.1.7",
     "jasmine-core": "3.8.0",
     "karma": "6.3.4",
     "karma-chrome-launcher": "^3.2.0",
