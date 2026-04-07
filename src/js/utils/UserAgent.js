@@ -10,7 +10,7 @@
     isMac: /Mac/.test(ua),
     isOpera: /OPR\//.test(ua),
     hasChrome: /Chrome/i.test(ua),
-    hasSafari: /Safari\//.test(ua),
+    hasSafari: /Safari\//.test(ua)
   };
 
   ns.UserAgent.isChrome =
